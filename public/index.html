@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Admin Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+
+    const ThemeToggle = ({ onThemeChange }) => {
+      const [theme, setTheme] = useState('light');
+      const toggleTheme = () => {
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        onThemeChange(newTheme);
+      };
+      return <button onClick={toggleTheme} className="p-2 bg-blue-500 text-white rounded">Toggle Theme</button>;
+    };
+
+    const Dashboard = () => {
+      const [currentTheme, setCurrentTheme] = useState('light');
+      const handleThemeChange = (theme) => setCurrentTheme(theme);
+
+      return (
+        <div className={`min-h-screen ${currentTheme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
+          <header className="p-4">
+            <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+            <ThemeToggle onThemeChange={handleThemeChange} />
+          </header>
+          <main className="p-4 grid grid-cols-2 gap-4">
+            <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
+              <h2>Chart</h2>
+              <div className="h-32 bg-gray-300 dark:bg-gray-700">Chart Placeholder</div>
+            </div>
+            <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
+              <h2>Table</h2>
+              <table className="w-full">
+                <thead><tr><th>Item</th><th>Value</th></tr></thead>
+                <tbody><tr><td>Item 1</td><td>100</td></tr></tbody>
+              </table>
+            </div>
+            <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
+              <h2>Calendar</h2>
+              <div className="h-32 bg-gray-300 dark:bg-gray-700">Calendar Placeholder</div>
+            </div>
+            <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
+              <h2>Kanban Board</h2>
+              <div className="h-32 bg-gray-300 dark:bg-gray-700">Kanban Placeholder</div>
+            </div>
+          </main>
+        </div>
+      );
+    };
+
+    ReactDOM.render(<Dashboard />, document.getElementById('root'));
+  </script>
